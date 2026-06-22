@@ -1,6 +1,6 @@
 # JazzSON
 
-JazzSON is a lightweight native macOS JSON viewer.
+JazzSON is a lightweight native macOS JSON viewer developed with Codex.
 
 ## Download
 
@@ -8,14 +8,13 @@ Download the latest `JazzSON.dmg` from the Releases page.
 
 ## First Launch
 
-JazzSON is not notarized yet. On first launch, macOS may warn that it cannot verify the app.
+JazzSON is not notarized (and will not be). On first launch, macOS will refuse to open it.
 
-To open it:
-1. Open the DMG.
-2. Drag JazzSON to Applications.
-3. In Applications, Control-click JazzSON.
-4. Choose Open.
-5. Confirm Open.
+To proceed:
+1. Go to System Settings
+2. Go to Privacy & Security
+3. Scroll down to the part that says "JazzSON.app" was blocked... and click Open Anyway
+4. Confirm to Open Anyway
 
 ## Requirements
 

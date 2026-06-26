@@ -1,0 +1,2 @@
+# Keep docs in the repository for GitHub Pages, but omit them from source archives.
+docs/** export-ignore

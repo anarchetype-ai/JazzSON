@@ -41,6 +41,14 @@ gradient?.draw(in: bounds, angle: 90)
 let titleColor = NSColor(calibratedWhite: 0.10, alpha: 1)
 let bodyColor = NSColor(calibratedWhite: 0.18, alpha: 1)
 let blue = NSColor(calibratedRed: 0.15, green: 0.40, blue: 0.62, alpha: 1)
+let finderAppIconCenter = NSPoint(x: 174, y: 196)
+let finderApplicationsIconCenter = NSPoint(x: 464, y: 196)
+let iconSize: CGFloat = 96
+let arrowMargin: CGFloat = 18
+
+func backgroundY(forFinderY finderY: CGFloat) -> CGFloat {
+    canvasSize.height - finderY
+}
 
 drawCentered(
     "JazzSON",
@@ -56,19 +64,23 @@ drawCentered(
     color: bodyColor
 )
 
-let arrowY: CGFloat = 214
+let arrowY = backgroundY(forFinderY: finderAppIconCenter.y)
+let arrowStartX = finderAppIconCenter.x + (iconSize / 2) + arrowMargin
+let arrowTipX = finderApplicationsIconCenter.x - (iconSize / 2) - arrowMargin
+let arrowHeadWidth: CGFloat = 26
+let arrowHeadHeight: CGFloat = 18
 let arrowPath = NSBezierPath()
-arrowPath.move(to: NSPoint(x: 246, y: arrowY))
-arrowPath.line(to: NSPoint(x: 394, y: arrowY))
+arrowPath.move(to: NSPoint(x: arrowStartX, y: arrowY))
+arrowPath.line(to: NSPoint(x: arrowTipX - arrowHeadWidth + 2, y: arrowY))
 arrowPath.lineWidth = 7
 arrowPath.lineCapStyle = .round
 blue.setStroke()
 arrowPath.stroke()
 
 let arrowHead = NSBezierPath()
-arrowHead.move(to: NSPoint(x: 402, y: arrowY))
-arrowHead.line(to: NSPoint(x: 374, y: arrowY + 20))
-arrowHead.line(to: NSPoint(x: 374, y: arrowY - 20))
+arrowHead.move(to: NSPoint(x: arrowTipX, y: arrowY))
+arrowHead.line(to: NSPoint(x: arrowTipX - arrowHeadWidth, y: arrowY + arrowHeadHeight))
+arrowHead.line(to: NSPoint(x: arrowTipX - arrowHeadWidth, y: arrowY - arrowHeadHeight))
 arrowHead.close()
 blue.setFill()
 arrowHead.fill()

@@ -323,6 +323,14 @@ private final class JSONViewController: NSViewController, JSONTextViewToggleDele
         rebuildRows()
     }
 
+    func performFindAction(_ action: NSTextFinder.Action) {
+        view.window?.makeFirstResponder(textView)
+
+        let item = NSMenuItem()
+        item.tag = action.rawValue
+        textView.performFindPanelAction(item)
+    }
+
     private func load(value: JSONValue, title: String, url: URL?, expandByDefault: Bool) {
         let rootNode = JSONNode.root(from: value)
         self.rootNode = rootNode
@@ -1046,6 +1054,18 @@ private final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelega
         activeController()?.collapseAll()
     }
 
+    @objc private func showFind(_ sender: Any?) {
+        activeController()?.performFindAction(.showFindInterface)
+    }
+
+    @objc private func findNext(_ sender: Any?) {
+        activeController()?.performFindAction(.nextMatch)
+    }
+
+    @objc private func findPrevious(_ sender: Any?) {
+        activeController()?.performFindAction(.previousMatch)
+    }
+
     @objc private func showHelp(_ sender: Any?) {
         guard isAboutSheetOpen == false else {
             return
@@ -1053,7 +1073,7 @@ private final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelega
 
         let alert = NSAlert()
         alert.alertStyle = .informational
-        alert.messageText = "JazzSON version 1.2.0"
+        alert.messageText = "JazzSON version 1.3.0"
         alert.informativeText = "Built by KC Kong on Codex"
         alert.icon = NSApp.applicationIconImage
         alert.addButton(withTitle: "OK")
@@ -1084,6 +1104,12 @@ private final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelega
 
         if menuItem.action == #selector(clearRecentDocuments(_:)) {
             return recentDocumentURLs().isEmpty == false
+        }
+
+        if menuItem.action == #selector(showFind(_:)) ||
+            menuItem.action == #selector(findNext(_:)) ||
+            menuItem.action == #selector(findPrevious(_:)) {
+            return activeController() != nil
         }
 
         return true
@@ -1435,6 +1461,17 @@ private final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelega
         let editMenu = NSMenu(title: "Edit")
         editMenuItem.submenu = editMenu
         editMenu.addItem(withTitle: "Paste", action: #selector(pasteJSON(_:)), keyEquivalent: "v").target = self
+        editMenu.addItem(NSMenuItem.separator())
+
+        let findMenuItem = editMenu.addItem(withTitle: "Find", action: nil, keyEquivalent: "")
+        let findMenu = NSMenu(title: "Find")
+        findMenuItem.submenu = findMenu
+        findMenu.addItem(withTitle: "Find...", action: #selector(showFind(_:)), keyEquivalent: "f").target = self
+        findMenu.addItem(withTitle: "Find Next", action: #selector(findNext(_:)), keyEquivalent: "g").target = self
+        let findPreviousItem = findMenu.addItem(withTitle: "Find Previous", action: #selector(findPrevious(_:)), keyEquivalent: "g")
+        findPreviousItem.target = self
+        findPreviousItem.keyEquivalentModifierMask = [.command, .shift]
+
         editMenu.addItem(NSMenuItem.separator())
         editMenu.addItem(withTitle: "Copy", action: #selector(NSText.copy(_:)), keyEquivalent: "c")
         editMenu.addItem(withTitle: "Select All", action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")

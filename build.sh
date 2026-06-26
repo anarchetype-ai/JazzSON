@@ -55,7 +55,7 @@ swiftc \
     -o "$MACOS_DIR/JazzSON"
 
 cp "$PROJECT_DIR/Info.plist" "$CONTENTS_DIR/Info.plist"
-cp "$ROOT_DIR/docs/JazzSON-PRD-1.2.0.md" "$RESOURCES_DIR/JazzSON-PRD.md"
+cp "$ROOT_DIR/docs/JazzSON-PRD.md" "$RESOURCES_DIR/JazzSON-PRD.md"
 codesign --force --sign - "$APP_DIR" >/dev/null
 
 echo "Built $APP_DIR"

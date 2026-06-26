@@ -70,6 +70,7 @@ with timeout of 60 seconds
         set current view of installerWindow to icon view
         set toolbar visible of installerWindow to false
         set statusbar visible of installerWindow to false
+        set pathbar visible of installerWindow to false
         set bounds of installerWindow to {160, 120, 800, 568}
         set theViewOptions to the icon view options of installerWindow
         set arrangement of theViewOptions to not arranged
@@ -79,6 +80,7 @@ with timeout of 60 seconds
         set position of item "Applications" of installerWindow to {464, 196}
         set toolbar visible of installerWindow to false
         set statusbar visible of installerWindow to false
+        set pathbar visible of installerWindow to false
         delay 1
         close installerWindow
     end tell

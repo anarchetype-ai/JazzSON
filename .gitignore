@@ -1,0 +1,9 @@
+# Local build artifacts and packaged outputs.
+work/
+outputs/
+
+# Local backups are not source release inputs.
+backups/
+
+# Local PRD and GitHub Pages hosting assets.
+docs/
